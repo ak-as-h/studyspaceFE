@@ -51,7 +51,7 @@ const ManageBookings = () => {
   return (
     <div className="min-h-screen bg-[#F4F6FA] p-4 md:p-8 lg:p-10">
 
-      {/* Page Heading */}
+      
       <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <div className="mb-2 flex items-center gap-2 text-xs font-medium text-gray-400">
@@ -77,7 +77,7 @@ const ManageBookings = () => {
         </div>
       </div>
 
-      {/* Owner Banner */}
+      
       <section className="relative mb-8 overflow-hidden rounded-3xl bg-[#14294C] p-7 text-white md:p-9">
         <div className="pointer-events-none absolute -right-12 -top-24 h-72 w-72 rounded-full border border-white/10" />
         <div className="pointer-events-none absolute -right-2 -top-16 h-52 w-52 rounded-full border border-white/10" />
@@ -107,7 +107,7 @@ const ManageBookings = () => {
         </div>
       </section>
 
-      {/* Booking Statistics */}
+      
       <section className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {stats.map((stat) => (
           <div
@@ -137,10 +137,10 @@ const ManageBookings = () => {
         ))}
       </section>
 
-      {/* Reservation Management */}
+      
       <section className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
 
-        {/* Section Header */}
+        
         <div className="flex flex-col gap-4 border-b border-gray-100 p-6 md:flex-row md:items-center md:justify-between">
           <div>
             <h2 className="text-lg font-bold text-[#101B35]">
@@ -159,7 +159,7 @@ const ManageBookings = () => {
           </div>
         </div>
 
-        {/* Booking Tabs */}
+        
         <div className="flex gap-7 overflow-x-auto border-b border-gray-100 px-6">
           <button className="whitespace-nowrap border-b-2 border-[#315A91] py-4 text-sm font-semibold text-[#315A91]">
             All Bookings
@@ -178,7 +178,7 @@ const ManageBookings = () => {
           </button>
         </div>
 
-        {/* Search and Filters */}
+        
         <div className="grid grid-cols-1 gap-3 border-b border-gray-100 p-5 md:grid-cols-[1fr_220px_auto]">
           <div className="relative">
             <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -207,7 +207,7 @@ const ManageBookings = () => {
           </button>
         </div>
 
-        {/* Booking Table */}
+        
         <div className="overflow-x-auto">
           <table className="w-full text-left" style={{ minWidth: "850px" }}>
             <thead className="bg-[#F9FAFC] text-xs uppercase tracking-wider text-gray-500">
@@ -247,7 +247,7 @@ const ManageBookings = () => {
         </div>
       </section>
 
-      {/* Booking Information */}
+      
       <section className="mt-7 grid grid-cols-1 gap-5 md:grid-cols-2">
 
         <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">

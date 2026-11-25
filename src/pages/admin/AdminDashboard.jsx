@@ -81,7 +81,7 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-[#F1F3F6] p-4 md:p-7 lg:p-9">
 
-      {/* Page Header */}
+      
       <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-center">
         <div>
           <div className="mb-2 flex items-center gap-2 text-xs font-medium text-gray-400">
@@ -107,7 +107,7 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Platform Summary Banner */}
+      
       <section className="mb-7 overflow-hidden rounded-2xl border border-indigo-100 bg-white">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto]">
           <div className="p-6 md:p-8">
@@ -135,7 +135,7 @@ const AdminDashboard = () => {
         </div>
       </section>
 
-      {/* Statistics */}
+      
       <section className="mb-7">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-sm font-bold text-[#202938]">
@@ -176,10 +176,10 @@ const AdminDashboard = () => {
         </div>
       </section>
 
-      {/* Analytics and Platform Health */}
+      
       <section className="mb-7 grid grid-cols-1 gap-5 xl:grid-cols-3">
 
-        {/* Analytics */}
+        
         <div className="rounded-xl border border-gray-200 bg-white p-6 xl:col-span-2">
           <div className="mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
             <div>
@@ -213,7 +213,7 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Platform Health */}
+        
         <div className="rounded-xl border border-gray-200 bg-white p-6">
           <div className="mb-6 flex items-center justify-between">
             <div>
@@ -258,7 +258,7 @@ const AdminDashboard = () => {
         </div>
       </section>
 
-      {/* Management Shortcuts */}
+      
       <section className="mb-7">
         <div className="mb-4">
           <h2 className="text-sm font-bold text-[#202938]">
@@ -297,7 +297,7 @@ const AdminDashboard = () => {
         </div>
       </section>
 
-      {/* Verification and Activity */}
+      
       <section className="grid grid-cols-1 gap-5 xl:grid-cols-2">
 
         {/* Verification Queue */}
@@ -338,7 +338,7 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Recent Activity */}
+        
         <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
           <div className="flex items-center justify-between border-b border-gray-100 p-5">
             <div>

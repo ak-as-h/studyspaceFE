@@ -48,9 +48,9 @@ const ManageSpaces = () => {
 
   return (
     <div className="min-h-screen bg-[#F4F6FA] p-4 md:p-8 lg:p-10">
-      <div className="mx-auto max-w-[1500px]">
+      <div className="mx-auto "style={{maxWidth:"1500px"}}>
 
-        {/* Page Header */}
+        
         <div className="mb-9 overflow-hidden rounded-3xl bg-[#14294C] p-7 text-white shadow-lg md:p-9">
           <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
             <div>
@@ -69,7 +69,7 @@ const ManageSpaces = () => {
             </div>
 
             <Link
-              to="/owner/add-space"
+              to=""
               className="flex w-fit items-center gap-3 rounded-xl bg-white px-6 py-4 text-sm font-bold text-[#14294C] transition hover:bg-blue-50"
             >
               <FaPlus />
@@ -79,7 +79,7 @@ const ManageSpaces = () => {
           </div>
         </div>
 
-        {/* Statistics */}
+        
         <div className="mb-8 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {stats.map((stat) => (
             <div
@@ -109,10 +109,10 @@ const ManageSpaces = () => {
           ))}
         </div>
 
-        {/* Listing Management */}
+        
         <section className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
 
-          {/* Section Heading */}
+          
           <div className="flex flex-col justify-between gap-4 border-b border-gray-100 p-6 md:flex-row md:items-center">
             <div>
               <div className="flex items-center gap-3">
@@ -201,7 +201,7 @@ const ManageSpaces = () => {
             </p>
 
             <Link
-              to="/owner/add-space"
+              to=""
               className="mt-7 inline-flex items-center gap-3 rounded-xl bg-blue-600 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700"
             >
               <FaPlus />
@@ -211,10 +211,10 @@ const ManageSpaces = () => {
           </div>
         </section>
 
-        {/* Bottom Information */}
+       
         <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3">
 
-          {/* Listing Guidelines */}
+          
           <div className="rounded-2xl bg-[#14294C] p-6 text-white lg:col-span-2">
             <div className="flex items-center gap-3">
               <div className="rounded-xl bg-white/10 p-3 text-blue-200">
@@ -247,7 +247,7 @@ const ManageSpaces = () => {
             </div>
           </div>
 
-          {/* Approval Information */}
+          
           <div className="rounded-2xl border border-blue-100 bg-blue-50 p-6">
             <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-blue-600">
               <FaInfoCircle className="text-xl" />
@@ -264,7 +264,7 @@ const ManageSpaces = () => {
           </div>
         </div>
 
-        {/* Management Reminder */}
+        
         <div className="mt-6 flex items-start gap-3 rounded-2xl border border-gray-200 bg-white p-5">
           <FaChartPie className="mt-1 text-blue-600" />
 

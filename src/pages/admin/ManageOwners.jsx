@@ -76,7 +76,7 @@ const ManageOwners = () => {
   return (
     <div className="min-h-screen bg-[#F1F3F6] p-4 md:p-7 lg:p-9">
 
-      {/* Page Header */}
+      
       <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
           <div className="mb-2 flex items-center gap-2 text-xs font-medium text-gray-400">
@@ -102,7 +102,7 @@ const ManageOwners = () => {
         </div>
       </div>
 
-      {/* Owner Administration Banner */}
+      
       <section className="mb-7 overflow-hidden rounded-2xl border border-indigo-100 bg-white">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto]">
           <div className="p-6 md:p-8">
@@ -129,7 +129,7 @@ const ManageOwners = () => {
         </div>
       </section>
 
-      {/* Owner Statistics */}
+      
       <section className="mb-7">
         <div className="mb-4 flex items-center justify-between">
           <div>
@@ -172,7 +172,7 @@ const ManageOwners = () => {
         </div>
       </section>
 
-      {/* Verification Checklist */}
+      
       <section className="mb-7 rounded-xl border border-gray-200 bg-white p-5 md:p-6">
         <div className="mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
           <div>
@@ -218,10 +218,10 @@ const ManageOwners = () => {
         </div>
       </section>
 
-      {/* Owner Directory */}
+      
       <section className="overflow-hidden rounded-xl border border-gray-200 bg-white">
 
-        {/* Directory Header */}
+       
         <div className="flex flex-col justify-between gap-4 border-b border-gray-100 p-5 md:flex-row md:items-center md:p-6">
           <div>
             <h2 className="text-sm font-bold text-[#202938]">
@@ -241,7 +241,7 @@ const ManageOwners = () => {
           </div>
         </div>
 
-        {/* Search and Filters */}
+        
         <div className="grid grid-cols-1 gap-3 border-b border-gray-100 p-5 lg:grid-cols-[1fr_auto] lg:items-center">
           <div className="relative">
             <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-xs text-gray-400" />
@@ -284,7 +284,7 @@ const ManageOwners = () => {
           </div>
         </div>
 
-        {/* Owner Table */}
+        
         <div className="overflow-x-auto">
           <table className="w-full text-left" style={{ minWidth: "900px" }}>
             <thead className="bg-[#F8F9FB]">
@@ -323,7 +323,7 @@ const ManageOwners = () => {
           </table>
         </div>
 
-        {/* Pagination */}
+        
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 px-5 py-4">
           <p className="text-xs text-gray-400">
             Showing 0 of 0 owners
@@ -347,7 +347,7 @@ const ManageOwners = () => {
         </div>
       </section>
 
-      {/* Approval Guidelines */}
+      
       <section className="mt-7 rounded-xl border border-amber-100 bg-amber-50/70 p-5">
         <div className="flex items-start gap-3">
           <FaExclamationCircle className="mt-0.5 shrink-0 text-amber-600" />

@@ -51,7 +51,7 @@ const ManageUsers = () => {
   return (
     <div className="min-h-screen bg-[#F1F3F6] p-4 md:p-7 lg:p-9">
 
-      {/* Page Heading */}
+      
       <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
           <div className="mb-2 flex items-center gap-2 text-xs font-medium text-gray-400">
@@ -77,7 +77,7 @@ const ManageUsers = () => {
         </div>
       </div>
 
-      {/* Directory Banner */}
+      
       <section className="mb-7 flex flex-col justify-between gap-5 rounded-2xl border border-indigo-100 bg-white p-6 md:flex-row md:items-center md:p-7">
         <div className="flex items-center gap-4">
           <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-indigo-50 text-2xl text-indigo-600">
@@ -107,7 +107,7 @@ const ManageUsers = () => {
         </div>
       </section>
 
-      {/* Statistics */}
+      
       <section className="mb-7">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-sm font-bold text-[#202938]">
@@ -148,10 +148,10 @@ const ManageUsers = () => {
         </div>
       </section>
 
-      {/* User Directory */}
+      
       <section className="overflow-hidden rounded-xl border border-gray-200 bg-white">
 
-        {/* Directory Header */}
+        
         <div className="flex flex-col justify-between gap-4 border-b border-gray-100 p-5 md:flex-row md:items-center md:p-6">
           <div>
             <h2 className="text-sm font-bold text-[#202938]">
@@ -171,7 +171,7 @@ const ManageUsers = () => {
           </div>
         </div>
 
-        {/* Search and Filters */}
+        
         <div className="grid grid-cols-1 gap-3 border-b border-gray-100 p-5 lg:grid-cols-[1fr_auto] lg:items-center">
           <div className="relative">
             <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-xs text-gray-400" />
@@ -309,7 +309,7 @@ const ManageUsers = () => {
         </div>
       </section>
 
-      {/* Footer */}
+      
       <footer className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-gray-200 pt-5 text-xs text-gray-400">
         <p>StudySpace Administration</p>
         <p>User Management Console</p>

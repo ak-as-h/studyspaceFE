@@ -17,13 +17,13 @@ import Dashboard from "./pages/user/Dashboard";
 import MyBookings from "./pages/user/MyBookings";
 import Profile from "./pages/user/Profile";
 
-// Owner Pages
+
 import OwnerDashboard from "./pages/owner/OwnerDashboard";
 import AddSpace from "./pages/owner/AddSpace";
 import ManageSpaces from "./pages/owner/ManageSpaces";
 import ManageBookings from "./pages/owner/ManageBookings";
 
-// Admin Pages
+
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import ManageUsers from "./pages/admin/ManageUsers";
 import ManageOwners from "./pages/admin/ManageOwners";

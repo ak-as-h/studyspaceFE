@@ -96,7 +96,7 @@ const VerifySpaces = () => {
         </p>
       </div>
 
-      {/* Verification Banner */}
+      
       <section className="mb-7 overflow-hidden rounded-2xl border border-gray-200 bg-white">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto]">
           <div className="p-6 md:p-8">
@@ -127,7 +127,7 @@ const VerifySpaces = () => {
         </div>
       </section>
 
-      {/* Statistics */}
+      
       <section className="mb-7">
         <div className="mb-4">
           <h2 className="text-sm font-bold text-[#202938]">
@@ -169,7 +169,7 @@ const VerifySpaces = () => {
         </div>
       </section>
 
-      {/* Property Review Checklist */}
+      
       <section className="mb-7 rounded-xl border border-gray-200 bg-white p-5 md:p-6">
         <div className="mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
           <div>
@@ -215,7 +215,7 @@ const VerifySpaces = () => {
         </div>
       </section>
 
-      {/* Submitted Spaces Directory */}
+      
       <section className="overflow-hidden rounded-xl border border-gray-200 bg-white">
 
         {/* Directory Header */}
@@ -238,7 +238,7 @@ const VerifySpaces = () => {
           </div>
         </div>
 
-        {/* Search and Filters */}
+       
         <div className="grid grid-cols-1 gap-3 border-b border-gray-100 p-5 lg:grid-cols-[1fr_auto] lg:items-center">
           <div className="relative">
             <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-xs text-gray-400" />
@@ -283,7 +283,7 @@ const VerifySpaces = () => {
           </div>
         </div>
 
-        {/* Spaces Table */}
+        
         <div className="overflow-x-auto">
           <table className="w-full text-left" style={{ minWidth: "950px" }}>
             <thead className="bg-[#F8F9FB]">
@@ -322,7 +322,7 @@ const VerifySpaces = () => {
           </table>
         </div>
 
-        {/* Pagination */}
+        
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 px-5 py-4">
           <p className="text-xs text-gray-400">
             Showing 0 of 0 listings
@@ -346,7 +346,7 @@ const VerifySpaces = () => {
         </div>
       </section>
 
-      {/* Verification Reminder */}
+      
       <section className="mt-7 rounded-xl border border-amber-100 bg-amber-50/70 p-5">
         <div className="flex items-start gap-3">
           <FaExclamationTriangle className="mt-0.5 shrink-0 text-amber-600" />
@@ -365,7 +365,7 @@ const VerifySpaces = () => {
         </div>
       </section>
 
-      {/* Footer */}
+      
       <footer className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-gray-200 pt-5 text-xs text-gray-400">
         <p>StudySpace Administration</p>
         <p>Space Verification Console</p>

@@ -131,7 +131,7 @@ const OwnerDashboard = () => {
       
       <section className="mb-8 grid grid-cols-1 gap-6 xl:grid-cols-3">
 
-        {/* Booking Activity Chart */}
+        {/* chart */}
         <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm xl:col-span-2">
           <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
             <div>
@@ -208,7 +208,7 @@ const OwnerDashboard = () => {
       
       <section className="grid grid-cols-1 gap-6 xl:grid-cols-2">
 
-        {/* My Properties */}
+        
         <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
           <div className="mb-6 flex items-center justify-between">
             <div>
