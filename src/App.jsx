@@ -16,18 +16,19 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/user/Dashboard";
 import MyBookings from "./pages/user/MyBookings";
 import Profile from "./pages/user/Profile";
-
+import BookingIssues from "./pages/user/BookingIssues";
 
 import OwnerDashboard from "./pages/owner/OwnerDashboard";
 import AddSpace from "./pages/owner/AddSpace";
 import ManageSpaces from "./pages/owner/ManageSpaces";
 import ManageBookings from "./pages/owner/ManageBookings";
-
+import PropertyClosures from "./pages/owner/PropertyClosures";
 
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import ManageUsers from "./pages/admin/ManageUsers";
 import ManageOwners from "./pages/admin/ManageOwners";
 import VerifySpaces from "./pages/admin/VerifySpaces";
+import ManageClosures from "./pages/admin/ManageClosures";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
         <Route path="/user/dashboard" element={<Dashboard />} />
         <Route path="/user/bookings" element={<MyBookings />} />
         <Route path="/user/profile" element={<Profile />} />
+        <Route path="/user/issues" element={<BookingIssues />} />
       </Route>
 
       {/* Owner Pages */}
@@ -54,6 +56,7 @@ function App() {
         <Route path="/owner/add-space" element={<AddSpace />} />
         <Route path="/owner/spaces" element={<ManageSpaces />} />
         <Route path="/owner/bookings" element={<ManageBookings />} />
+        <Route path="/owner/closures" element={<PropertyClosures />} />
       </Route>
 
       {/* Admin Pages */}
@@ -62,6 +65,7 @@ function App() {
         <Route path="/admin/users" element={<ManageUsers />} />
         <Route path="/admin/owners" element={<ManageOwners />} />
         <Route path="/admin/spaces" element={<VerifySpaces />} />
+        <Route path="/admin/closures" element={<ManageClosures />} />
       </Route>
     </Routes>
   );

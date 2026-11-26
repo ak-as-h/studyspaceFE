@@ -19,51 +19,57 @@ const MyBookings = () => {
       title: "Total Bookings",
       value: "0",
       icon: <FaCalendarAlt />,
-      color: "bg-blue-50 text-blue-600",
+      color: "bg-[#F5F0E8] border border-[#EDE8DF] text-[#C17A56]",
     },
     {
       title: "Upcoming",
       value: "0",
       icon: <FaClock />,
-      color: "bg-emerald-50 text-emerald-600",
+      color: "bg-[#F5F0E8] border border-[#EDE8DF] text-[#C17A56]",
     },
     {
       title: "Completed",
       value: "0",
       icon: <FaBookOpen />,
-      color: "bg-violet-50 text-violet-600",
+      color: "bg-[#F5F0E8] border border-[#EDE8DF] text-[#C17A56]",
     },
     {
       title: "Cancelled",
       value: "0",
       icon: <FaTimesCircle />,
-      color: "bg-rose-50 text-rose-600",
+      color: "bg-[#F5F0E8] border border-[#EDE8DF] text-[#A09A93]",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-[#e8f0fa] via-[#f5f5f1] to-[#e4eaf5] px-5 py-10 md:px-10">
+    <div className="bg-[#F5F0E8] px-5 py-10 md:px-10">
       <div className="mx-auto max-w-7xl">
 
         {/* Page Header */}
         <div className="mb-9 flex flex-col justify-between gap-5 md:flex-row md:items-center">
           <div>
-            <p className="mb-2 text-xs font-bold uppercase tracking-[3px] text-blue-600">
-              Student Portal
-            </p>
+            <div className="mb-3 flex items-center gap-3">
+              <span className="w-6 h-px bg-[#C17A56]" />
+              <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#C17A56]">
+                Student Portal
+              </p>
+            </div>
 
-            <h1 className="text-3xl font-bold tracking-tight text-[#14213D] md:text-4xl">
+            <h1
+              className="text-3xl font-bold tracking-tight text-[#1C1917] md:text-4xl"
+              style={{ fontFamily: "'Georgia', serif" }}
+            >
               My Bookings
             </h1>
 
-            <p className="mt-2 text-sm text-slate-500 md:text-base">
+            <p className="mt-2 text-sm text-[#7C6F60] md:text-base">
               Manage your reservations and keep track of your study sessions.
             </p>
           </div>
 
           <Link
             to="/explore"
-            className="flex w-fit items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700"
+            className="flex w-fit items-center gap-2 bg-[#1C1917] px-6 py-3 font-semibold text-white transition hover:bg-[#C17A56]"
           >
             Explore Spaces
             <FaArrowRight />
@@ -75,20 +81,17 @@ const MyBookings = () => {
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="rounded-2xl border border-white/70 bg-white/45 p-6 shadow-lg backdrop-blur-2xl"
+              className="border border-[#EDE8DF] bg-white p-6"
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-slate-500">
-                    {stat.title}
-                  </p>
-
-                  <h2 className="mt-3 text-3xl font-bold text-[#14213D]">
+                  <p className="text-sm text-[#7C6F60]">{stat.title}</p>
+                  <h2 className="mt-3 text-3xl font-bold text-[#1C1917]">
                     {stat.value}
                   </h2>
                 </div>
 
-                <div className={`rounded-2xl p-4 text-xl ${stat.color}`}>
+                <div className={`p-4 text-xl ${stat.color}`}>
                   {stat.icon}
                 </div>
               </div>
@@ -97,23 +100,23 @@ const MyBookings = () => {
         </div>
 
         {/* Booking History */}
-        <section className="overflow-hidden rounded-3xl border border-white/70 bg-white/45 shadow-xl backdrop-blur-2xl">
+        <section className="overflow-hidden border border-[#EDE8DF] bg-white">
 
           {/* Section Header */}
-          <div className="border-b border-white/70 p-6 md:p-8">
+          <div className="border-b border-[#EDE8DF] bg-white p-6 md:p-8">
             <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
               <div>
                 <div className="flex items-center gap-3">
-                  <div className="rounded-xl bg-blue-50 p-3 text-blue-600">
+                  <div className="bg-[#F5F0E8] border border-[#EDE8DF] p-3 text-[#C17A56]">
                     <FaHistory />
                   </div>
 
                   <div>
-                    <h2 className="text-xl font-bold text-[#14213D]">
+                    <h2 className="text-xl font-bold text-[#1C1917]">
                       Booking History
                     </h2>
 
-                    <p className="mt-1 text-sm text-slate-500">
+                    <p className="mt-1 text-sm text-[#7C6F60]">
                       View your reservation details and booking status.
                     </p>
                   </div>
@@ -122,20 +125,20 @@ const MyBookings = () => {
 
               {/* Filters */}
               <div className="flex flex-wrap gap-3">
-                <div className="flex items-center gap-2 rounded-xl border border-white/80 bg-white/60 px-4 py-3">
-                  <FaSearch className="text-slate-400" />
+                <div className="flex items-center gap-2 border border-[#D4C5A9] bg-[#F5F0E8] px-4 py-3">
+                  <FaSearch className="text-[#A09A93]" />
 
                   <input
                     type="text"
                     readOnly
                     placeholder="Search bookings..."
-                    className="w-36 bg-transparent text-sm outline-none placeholder:text-slate-400"
+                    className="w-36 bg-transparent text-sm outline-none placeholder:text-[#A09A93]"
                   />
                 </div>
 
                 <select
                   defaultValue="all"
-                  className="rounded-xl border border-white/80 bg-white/60 px-4 py-3 text-sm text-slate-700 outline-none"
+                  className="border border-[#D4C5A9] bg-[#F5F0E8] px-4 py-3 text-sm text-[#7C6F60] outline-none"
                 >
                   <option value="all">All Bookings</option>
                   <option value="upcoming">Upcoming</option>
@@ -145,7 +148,7 @@ const MyBookings = () => {
 
                 <button
                   type="button"
-                  className="flex items-center gap-2 rounded-xl border border-white/80 bg-white/60 px-4 py-3 text-sm font-semibold text-slate-700"
+                  className="flex items-center gap-2 border border-[#D4C5A9] bg-white px-4 py-3 text-sm font-semibold text-[#7C6F60]"
                 >
                   <FaFilter />
                   Filter
@@ -156,9 +159,9 @@ const MyBookings = () => {
 
           {/* Booking Table Structure */}
           <div className="overflow-x-auto">
-            <table className="w-full  text-left"style={{minWidth:"800px"}}>
+            <table className="w-full text-left" style={{ minWidth: "800px" }}>
               <thead>
-                <tr className="border-b border-white/70 bg-white/30 text-xs uppercase tracking-wider text-slate-500">
+                <tr className="border-b border-[#EDE8DF] bg-[#F5F0E8] text-xs uppercase tracking-wider text-[#A09A93]">
                   <th className="px-6 py-5 font-semibold">Study Space</th>
                   <th className="px-6 py-5 font-semibold">Booking Date</th>
                   <th className="px-6 py-5 font-semibold">Duration</th>
@@ -172,15 +175,15 @@ const MyBookings = () => {
                 <tr>
                   <td colSpan="6" className="px-6 py-20 text-center">
                     <div className="mx-auto flex max-w-md flex-col items-center">
-                      <div className="mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-blue-50 text-3xl text-blue-500">
+                      <div className="mb-5 flex h-20 w-20 items-center justify-center bg-[#F5F0E8] border border-[#EDE8DF] text-3xl text-[#C17A56]">
                         <FaReceipt />
                       </div>
 
-                      <h3 className="text-xl font-bold text-[#14213D]">
+                      <h3 className="text-xl font-bold text-[#1C1917]">
                         No Bookings Yet
                       </h3>
 
-                      <p className="mt-3 text-sm leading-7 text-slate-500">
+                      <p className="mt-3 text-sm leading-7 text-[#7C6F60]">
                         Your reservation history will appear here once you
                         make a booking. Explore available study spaces and
                         find an environment that suits your needs.
@@ -188,7 +191,7 @@ const MyBookings = () => {
 
                       <Link
                         to="/explore"
-                        className="mt-6 flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700"
+                        className="mt-6 flex items-center gap-2 bg-[#1C1917] px-6 py-3 font-semibold text-white transition hover:bg-[#C17A56]"
                       >
                         <FaSearch />
                         Discover Study Spaces
@@ -204,38 +207,38 @@ const MyBookings = () => {
         {/* Cancellation Information */}
         <div className="mt-7 grid gap-5 md:grid-cols-2">
 
-          <div className="rounded-2xl border border-white/70 bg-white/45 p-6 shadow-lg backdrop-blur-2xl">
-            <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-orange-50 text-orange-500">
+          <div className="border border-[#EDE8DF] bg-white p-6">
+            <div className="mb-4 flex h-11 w-11 items-center justify-center bg-[#F5F0E8] border border-[#EDE8DF] text-[#C17A56]">
               <FaTimesCircle />
             </div>
 
-            <h3 className="font-bold text-[#14213D]">
+            <h3 className="font-bold text-[#1C1917]">
               Cancellation Information
             </h3>
 
-            <p className="mt-2 text-sm leading-7 text-slate-500">
+            <p className="mt-2 text-sm leading-7 text-[#7C6F60]">
               Cancellation policies and applicable refund details will be
               displayed with your reservation information.
             </p>
           </div>
 
-          <div className="rounded-2xl border border-white/70 bg-white/45 p-6 shadow-lg backdrop-blur-2xl">
-            <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+          <div className="border border-[#EDE8DF] bg-white p-6">
+            <div className="mb-4 flex h-11 w-11 items-center justify-center bg-[#F5F0E8] border border-[#EDE8DF] text-[#C17A56]">
               <FaMapMarkerAlt />
             </div>
 
-            <h3 className="font-bold text-[#14213D]">
+            <h3 className="font-bold text-[#1C1917]">
               Find Your Ideal Study Space
             </h3>
 
-            <p className="mt-2 text-sm leading-7 text-slate-500">
+            <p className="mt-2 text-sm leading-7 text-[#7C6F60]">
               Explore libraries, reading rooms and coworking spaces to find
               the right environment for your learning needs.
             </p>
 
             <Link
               to="/explore"
-              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#C17A56] transition hover:text-[#1C1917]"
             >
               Explore Spaces
               <FaArrowRight />

@@ -1,12 +1,11 @@
 import React from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import {
-  FaBookOpen,
   FaHome,
   FaCalendarCheck,
   FaUser,
   FaBell,
-  FaSearch,
+  FaExclamationTriangle,
 } from "react-icons/fa";
 
 const UserLayout = () => {
@@ -14,33 +13,40 @@ const UserLayout = () => {
     { to: "/user/dashboard", icon: <FaHome />, label: "Dashboard" },
     { to: "/user/bookings", icon: <FaCalendarCheck />, label: "My Bookings" },
     { to: "/user/profile", icon: <FaUser />, label: "My Profile" },
+    { to: "/user/issues", icon: <FaExclamationTriangle />, label: "Issues" },
   ];
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-[#dce9f8] via-[#f5f5f1] to-[#dce4f5]">
-      
-      <header className="sticky top-0 z-40 border-b border-white/40 bg-white/60 backdrop-blur-2xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8">
-          
-          <div className="flex items-center gap-2">
-            <div className="rounded-xl bg-blue-600 p-2 text-white">
-              <FaBookOpen size={18} />
+    <div className="min-h-screen bg-[#F5F0E8]">
+
+      {/* Top Header */}
+      <header className="sticky top-0 z-40 bg-[#1C1917] border-b border-[#2E2925]">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-10">
+
+          {/* Logo */}
+          <div className="flex items-center gap-3">
+            <div className="w-7 h-7 bg-[#C17A56] flex items-center justify-center">
+              <span className="text-white font-black text-[9px] tracking-widest">SS</span>
             </div>
-            <span className="text-xl font-bold text-slate-900">
-              Study<span className="text-blue-600">Space</span>
+            <span
+              className="text-white text-base font-light tracking-[0.12em] uppercase"
+              style={{ fontFamily: "'Georgia', serif", letterSpacing: "0.15em" }}
+            >
+              Study<span className="font-bold text-[#C17A56]">Space</span>
             </span>
           </div>
 
-          
+          {/* Desktop Nav */}
           <nav className="hidden items-center gap-1 md:flex">
             {navItems.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
                 className={({ isActive }) =>
-                  `flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition ${isActive
-                    ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20"
-                    : "text-slate-600 hover:bg-white/60 hover:text-blue-600"
+                  `flex items-center gap-2 px-4 py-2 text-xs font-medium tracking-[0.08em] uppercase transition ${
+                    isActive
+                      ? "text-white bg-[#C17A56]"
+                      : "text-[#A09A93] hover:text-white"
                   }`
                 }
               >
@@ -50,51 +56,41 @@ const UserLayout = () => {
             ))}
           </nav>
 
-          
+          {/* Right: Bell + Avatar */}
           <div className="flex items-center gap-3">
-            <button
-              type="button"
-              aria-label="Notifications"
-              className="relative flex h-11 w-11 items-center justify-center rounded-xl border border-white/70 bg-white/40 text-xl text-slate-700 shadow-lg backdrop-blur-2xl transition hover:bg-white/60"
+            <div
+              aria-hidden="true"
+              className="relative flex h-9 w-9 items-center justify-center border border-[#2E2925] bg-[#2E2925] text-[#A09A93]"
             >
-              <FaBell />
-              <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full border-2 border-white bg-red-500" />
-            </button>
-
-            <button
-              type="button"
-              className="hidden items-center gap-2 rounded-xl border border-blue-400/30 bg-blue-600/90 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 backdrop-blur-lg transition hover:bg-blue-700 sm:flex"
-            >
-              <FaSearch />
-              Explore Spaces
-            </button>
-
-            
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 font-bold text-white md:hidden">
+              <FaBell size={13} />
+              <span className="absolute right-2 top-2 h-1.5 w-1.5 bg-[#C17A56]" />
+            </div>
+            <div className="flex h-8 w-8 items-center justify-center bg-[#7C9A92] font-bold text-white text-xs uppercase tracking-wider">
               S
             </div>
           </div>
         </div>
 
-        
-        <nav className="flex items-center justify-around border-t border-white/40 px-4 py-2 md:hidden">
+        {/* Mobile Bottom-of-header nav */}
+        <nav className="flex items-center justify-around border-t border-[#2E2925] px-4 py-2 md:hidden">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `flex flex-col items-center gap-1 px-3 py-1 text-xs font-medium transition ${isActive ? "text-blue-600" : "text-slate-500"
+                `flex flex-col items-center gap-1 px-3 py-1 text-[10px] font-medium tracking-[0.08em] uppercase transition ${
+                  isActive ? "text-[#C17A56]" : "text-[#A09A93]"
                 }`
               }
             >
-              <span className="text-base">{item.icon}</span>
+              <span className="text-sm">{item.icon}</span>
               {item.label}
             </NavLink>
           ))}
         </nav>
       </header>
 
-      
+      {/* Page Content */}
       <main>
         <Outlet />
       </main>

@@ -1,6 +1,4 @@
-
-import React from "react";
-
+import React, { useState, useEffect } from "react";
 import {
   FaSearch,
   FaMapMarkerAlt,
@@ -11,9 +9,30 @@ import {
   FaBookOpen,
   FaTimes,
   FaArrowRight,
+  FaLock,
 } from "react-icons/fa";
+import { getClosures, SAMPLE_SPACES } from "../utils/closureStore";
 
 const ExploreSpaces = () => {
+  const [closures, setClosures] = useState([]);
+
+  useEffect(() => {
+    setClosures(getClosures());
+  }, []);
+
+  function getSpaceClosure(spaceId) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return closures.find((c) => {
+      if (c.spaceId !== spaceId) return false;
+      if (c.status === "resolved") return false;
+      const start = new Date(c.startDate);
+      if (c.type === "permanent") return today >= start;
+      const end = new Date(c.endDate);
+      return today >= start && today <= end;
+    }) || null;
+  }
+
   const facilityOptions = [
     { name: "Wi-Fi", icon: <FaWifi /> },
     { name: "Air Conditioning", icon: <FaSnowflake /> },
@@ -29,49 +48,52 @@ const ExploreSpaces = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-[#F5F5F1] via-[#EAF1FA] to-[#FAFAF8]">
+    <div className="min-h-screen bg-[#F5F0E8]">
 
-      
-      <section className="relative overflow-hidden bg-[#F5F5F1]">
-        <div className="mx-auto max-w-7xl px-6 pt-16 pb-20">
-          <div className="max-w-3xl">
-            <span className="mb-5 inline-block text-sm font-semibold uppercase tracking-wider text-blue-600">
+      {/* Hero */}
+      <section className="bg-[#1C1917]">
+        <div className="mx-auto max-w-7xl px-6 md:px-10 pt-14 pb-16">
+          <div className="flex items-center gap-3 mb-7">
+            <span className="w-6 h-px bg-[#C17A56]" />
+            <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#C17A56]">
               Discover Your Space
             </span>
-
-            <h1 className="text-4xl font-bold leading-tight text-slate-900 md:text-5xl lg:text-6xl">
-              Find a Place Where
-              <span className="text-blue-600"> Focus Begins.</span>
-            </h1>
-
-            <p className="mt-6 max-w-2xl text-base leading-8 text-gray-500 md:text-lg">
-              Explore libraries, reading rooms and productive workspaces. Find
-              an environment that matches your lifestyle and budget.
-            </p>
           </div>
 
-          
-          <div className="mt-10 flex max-w-5xl flex-col gap-4 rounded-2xl border border-white/60 bg-white/40 p-5 shadow-xl backdrop-blur-2xl md:flex-row">
-            <div className="flex flex-1 items-center gap-3 px-3">
-              <FaMapMarkerAlt className="text-lg text-blue-600" />
+          <h1
+            className="text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl"
+            style={{ fontFamily: "'Georgia', serif" }}
+          >
+            Find a Place Where
+            <span className="text-[#C17A56]"> Focus Begins.</span>
+          </h1>
 
+          <p className="mt-6 max-w-2xl text-sm leading-8 text-[#A09A93]">
+            Explore libraries, reading rooms and productive workspaces. Find
+            an environment that matches your lifestyle and budget.
+          </p>
+
+          {/* Search bar */}
+          <div className="mt-10 flex max-w-4xl flex-col gap-0 border border-[#2E2925] bg-[#2E2925] md:flex-row">
+            <div className="flex flex-1 items-center gap-3 px-5 py-4">
+              <FaMapMarkerAlt className="text-sm text-[#C17A56]" />
               <input
                 type="text"
                 readOnly
                 placeholder="Enter city or location"
-                className="w-full bg-transparent py-2 text-gray-800 outline-none placeholder:text-gray-500"
+                className="w-full bg-transparent text-sm text-white outline-none placeholder:text-[#7C6F60]"
               />
             </div>
 
-            <div className="hidden w-px bg-gray-200 md:block"></div>
+            <div className="hidden w-px bg-[#3E3832] md:block" />
 
-            <div className="flex-1 px-3">
+            <div className="flex-1 px-5">
               <select
                 defaultValue="All Spaces"
-                className="w-full bg-transparent py-2 text-gray-700 outline-none"
+                className="w-full bg-transparent py-4 text-sm text-[#A09A93] outline-none"
               >
                 {categories.map((item) => (
-                  <option key={item} value={item}>
+                  <option key={item} value={item} className="bg-[#1C1917] text-white">
                     {item}
                   </option>
                 ))}
@@ -80,57 +102,75 @@ const ExploreSpaces = () => {
 
             <button
               type="button"
-              className="flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-8 py-3 font-medium text-white transition duration-300 hover:bg-blue-700"
+              className="flex items-center justify-center gap-2 bg-[#C17A56] px-8 py-4 text-sm font-bold tracking-[0.08em] uppercase text-white transition hover:bg-[#A8663F]"
             >
-              <FaSearch />
-              Search Spaces
+              <FaSearch size={12} />
+              Search
             </button>
           </div>
         </div>
       </section>
 
-      
-      <section className="mx-auto max-w-7xl px-6 py-14">
+      {/* Category Tabs */}
+      <div className="bg-white border-b border-[#EDE8DF]">
+        <div className="mx-auto max-w-7xl px-6 md:px-10">
+          <div className="flex gap-0 overflow-x-auto">
+            {categories.map((cat, i) => (
+              <button
+                key={cat}
+                type="button"
+                className={`whitespace-nowrap px-5 py-4 text-xs font-bold tracking-[0.08em] uppercase transition border-b-2 ${
+                  i === 0
+                    ? "border-[#C17A56] text-[#1C1917]"
+                    : "border-transparent text-[#A09A93] hover:text-[#1C1917]"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <section className="mx-auto max-w-7xl px-6 md:px-10 py-12">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
 
-         
+          {/* Filters sidebar */}
           <aside className="lg:col-span-1">
-            <div className="rounded-2xl border border-white/70 bg-white/60 p-6 shadow-lg backdrop-blur-xl">
+            <div className="bg-white border border-[#EDE8DF] p-6">
 
-              <div className="mb-7 flex items-center justify-between">
-                <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900">
-                  <FaSlidersH className="text-blue-600" />
+              <div className="mb-7 flex items-center justify-between border-b border-[#EDE8DF] pb-5">
+                <h2 className="flex items-center gap-2 text-xs font-bold tracking-[0.1em] uppercase text-[#1C1917]">
+                  <FaSlidersH className="text-[#C17A56]" size={12} />
                   Filters
                 </h2>
-
                 <button
                   type="button"
-                  className="text-sm font-medium text-blue-600 transition hover:text-blue-800"
+                  className="text-[10px] font-bold tracking-[0.08em] uppercase text-[#C17A56] hover:text-[#A8663F] transition"
                 >
                   Clear All
                 </button>
               </div>
 
-             
+              {/* Category */}
               <div className="mb-7">
-                <h3 className="mb-5 font-semibold text-slate-800">
+                <h3 className="mb-5 text-[10px] font-bold tracking-[0.15em] uppercase text-[#7C6F60]">
                   Space Category
                 </h3>
-
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {categories.map((item, index) => (
                     <label
                       key={item}
-                      className="group flex cursor-pointer items-center gap-3 text-gray-600"
+                      className="group flex cursor-pointer items-center gap-3 text-[#7C6F60]"
                     >
                       <input
                         type="radio"
                         name="category"
                         defaultChecked={index === 0}
-                        className="h-4 w-4 accent-blue-600"
+                        className="h-3.5 w-3.5 accent-[#1C1917]"
                       />
-
-                      <span className="text-sm transition group-hover:text-blue-600">
+                      <span className="text-xs transition group-hover:text-[#1C1917]">
                         {item}
                       </span>
                     </label>
@@ -138,125 +178,187 @@ const ExploreSpaces = () => {
                 </div>
               </div>
 
-              <hr className="mb-7 border-gray-100" />
+              <div className="mb-7 h-px bg-[#EDE8DF]" />
 
-             
+              {/* Budget */}
               <div className="mb-7">
-                <h3 className="mb-5 font-semibold text-slate-800">
-                  Maximum Monthly Budget
+                <h3 className="mb-5 text-[10px] font-bold tracking-[0.15em] uppercase text-[#7C6F60]">
+                  Monthly Budget
                 </h3>
-
                 <input
                   type="range"
                   min="100"
                   max="5000"
                   step="100"
                   defaultValue="1000"
-                  className="w-full accent-blue-600"
+                  className="w-full accent-[#C17A56]"
                 />
-
-                <div className="mt-3 flex justify-between text-sm text-gray-400">
+                <div className="mt-3 flex justify-between text-xs text-[#A09A93]">
                   <span>₹100</span>
-                  <span className="font-bold text-blue-600">₹1,000</span>
+                  <span className="font-bold text-[#1C1917]">₹1,000</span>
                   <span>₹5,000</span>
                 </div>
               </div>
 
-              <hr className="mb-7 border-gray-100" />
+              <div className="mb-7 h-px bg-[#EDE8DF]" />
 
-              
+              {/* Facilities */}
               <div>
-                <h3 className="mb-5 font-semibold text-slate-800">
+                <h3 className="mb-5 text-[10px] font-bold tracking-[0.15em] uppercase text-[#7C6F60]">
                   Facilities
                 </h3>
-
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {facilityOptions.map((facility) => (
                     <label
                       key={facility.name}
-                      className="group flex cursor-pointer items-center gap-3 text-gray-600"
+                      className="group flex cursor-pointer items-center gap-3 text-[#7C6F60]"
                     >
                       <input
                         type="checkbox"
-                        className="h-4 w-4 accent-blue-600"
+                        className="h-3.5 w-3.5 accent-[#1C1917]"
                       />
-
-                      <span className="flex items-center gap-3 text-sm transition group-hover:text-blue-600">
-                        <span className="text-gray-400">
-                          {facility.icon}
-                        </span>
-
+                      <span className="flex items-center gap-2 text-xs transition group-hover:text-[#1C1917]">
+                        <span className="text-[#C17A56]">{facility.icon}</span>
                         {facility.name}
                       </span>
                     </label>
                   ))}
                 </div>
               </div>
-
             </div>
           </aside>
 
-          
+          {/* Results area */}
           <div className="lg:col-span-3">
 
             <div className="mb-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
               <div>
-                <h2 className="text-2xl font-bold text-slate-900">
+                <h2
+                  className="text-2xl font-bold text-[#1C1917]"
+                  style={{ fontFamily: "'Georgia', serif" }}
+                >
                   Explore Study Spaces
                 </h2>
-
-                <p className="mt-2 text-sm text-gray-500">
+                <p className="mt-1 text-xs text-[#7C6F60] tracking-wide">
                   Discover places that match your preferences.
                 </p>
               </div>
 
               <select
                 defaultValue="recommended"
-                className="rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-600 outline-none"
+                className="border border-[#D4C5A9] bg-white px-4 py-3 text-xs font-medium tracking-wide text-[#7C6F60] outline-none"
               >
-                <option value="recommended">Sort by: Recommended</option>
+                <option value="recommended">Sort: Recommended</option>
                 <option value="low">Price: Low to High</option>
                 <option value="high">Price: High to Low</option>
                 <option value="rating">Highest Rated</option>
               </select>
             </div>
 
-            {/* Active Filters - Static UI */}
+            {/* Active Filters */}
             <div className="mb-6 flex flex-wrap gap-2">
-              <span className="flex items-center gap-2 rounded-full bg-blue-50 px-4 py-2 text-sm text-blue-700">
+              <span className="flex items-center gap-2 bg-[#1C1917] text-white px-3 py-1.5 text-[10px] font-bold tracking-[0.08em] uppercase">
                 All Spaces
-                <FaTimes size={11} />
+                <FaTimes size={9} />
               </span>
             </div>
 
-         
-            <div
-              className="flex flex-col items-center justify-center rounded-2xl border border-white/70 bg-white/50 px-6 py-12 text-center shadow-lg backdrop-blur-xl"
-              style={{ minHeight: "430px" }}
-            >
-              <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-blue-50">
-                <FaBookOpen className="text-3xl text-blue-600" />
-              </div>
+            {/* Space Cards */}
+            <div className="space-y-4">
+              {SAMPLE_SPACES.map((space) => {
+                const closure = getSpaceClosure(space.id);
+                const isClosed = !!closure;
+                return (
+                  <div
+                    key={space.id}
+                    className={`relative border bg-white transition ${
+                      isClosed
+                        ? "border-[#D4C5A9] opacity-80"
+                        : "border-[#EDE8DF] hover:border-[#C17A56]/40"
+                    }`}
+                  >
+                    {/* Closure banner */}
+                    {closure && (
+                      <div
+                        className={`flex items-center gap-2 px-5 py-2 text-xs font-semibold ${
+                          closure.type === "permanent"
+                            ? "bg-[#1C1917] text-white"
+                            : "bg-amber-50 text-amber-700 border-b border-amber-200"
+                        }`}
+                      >
+                        <FaLock size={10} />
+                        {closure.type === "permanent"
+                          ? "Permanently Closed"
+                          : `Temporarily Closed until ${new Date(closure.endDate).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}`}
+                        {" · "}
+                        {closure.reason}
+                      </div>
+                    )}
 
-              <h3 className="text-xl font-bold text-slate-900 md:text-2xl">
-                Your Next Study Space Awaits
-              </h3>
+                    <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center">
+                      {/* Icon box */}
+                      <div className="flex h-14 w-14 shrink-0 items-center justify-center bg-[#F5F0E8] border border-[#EDE8DF] text-[#C17A56]">
+                        <FaBookOpen size={20} />
+                      </div>
 
-              <p className="mt-4 max-w-md text-sm leading-7 text-gray-500">
-                Study spaces will appear here once they are added to StudySpace.
-                You will be able to compare facilities, explore pricing and find
-                the perfect place to focus.
-              </p>
+                      {/* Info */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-start justify-between gap-2">
+                          <div>
+                            <h3
+                              className="font-bold text-[#1C1917]"
+                              style={{ fontFamily: "'Georgia', serif" }}
+                            >
+                              {space.name}
+                            </h3>
+                            <p className="mt-0.5 flex items-center gap-1.5 text-xs text-[#7C6F60]">
+                              <FaMapMarkerAlt size={10} className="text-[#C17A56]" />
+                              {space.location}
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-lg font-bold text-[#1C1917]">
+                              ₹{space.pricePerDay}
+                              <span className="text-xs font-normal text-[#A09A93]">/day</span>
+                            </p>
+                            <p className="text-xs text-[#7C6F60]">Capacity: {space.capacity}</p>
+                          </div>
+                        </div>
 
-              <button
-                type="button"
-                className="mt-7 flex items-center gap-2 text-sm font-semibold text-blue-600 transition hover:text-blue-800"
-              >
-                Clear All Filters
-                <FaArrowRight />
-              </button>
+                        <div className="mt-3 flex flex-wrap items-center gap-2">
+                          <span className="border border-[#EDE8DF] bg-[#F5F0E8] px-2 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-[#7C6F60]">
+                            {space.type}
+                          </span>
+                          {space.facilities.slice(0, 3).map((f) => (
+                            <span key={f} className="text-[11px] text-[#A09A93]">
+                              · {f}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* CTA */}
+                      <div className="flex shrink-0 flex-col gap-2 sm:items-end">
+                        {isClosed ? (
+                          <span className="inline-flex items-center gap-2 border border-[#D4C5A9] bg-[#F5F0E8] px-4 py-2.5 text-xs font-bold tracking-[0.08em] uppercase text-[#A09A93]">
+                            <FaLock size={10} />
+                            Unavailable
+                          </span>
+                        ) : (
+                          <button
+                            type="button"
+                            className="inline-flex items-center gap-2 bg-[#1C1917] px-4 py-2.5 text-xs font-bold tracking-[0.08em] uppercase text-white transition hover:bg-[#C17A56]"
+                          >
+                            View Details
+                            <FaArrowRight size={10} />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-
           </div>
         </div>
       </section>

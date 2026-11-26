@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import {
   FaArrowLeft,
   FaMapMarkerAlt,
@@ -14,9 +14,45 @@ import {
   FaShieldAlt,
   FaArrowRight,
   FaStar,
+  FaLock,
+  FaExclamationTriangle,
 } from "react-icons/fa";
+import { getClosures, checkSpaceAvailability, SAMPLE_SPACES } from "../utils/closureStore";
 
 const SpaceDetails = () => {
+  const { id } = useParams();
+  const [closures, setClosures] = useState([]);
+  const [bookingDate, setBookingDate] = useState("");
+  const [dateAvail, setDateAvail] = useState(null); // null | { available, reason }
+
+  useEffect(() => {
+    setClosures(getClosures());
+  }, []);
+
+  // Find the space (from sample data or use a default demo space)
+  const space = SAMPLE_SPACES.find((s) => s.id === id) || SAMPLE_SPACES[0];
+
+  // Active closure for this space today
+  const today = new Date().toISOString().split("T")[0];
+  const activeClosure = closures.find((c) => {
+    if (c.spaceId !== space.id) return false;
+    if (c.status === "resolved") return false;
+    const start = new Date(c.startDate);
+    const todayD = new Date(today);
+    if (c.type === "permanent") return todayD >= start;
+    return todayD >= start && todayD <= new Date(c.endDate);
+  }) || null;
+
+  function handleDateChange(e) {
+    const d = e.target.value;
+    setBookingDate(d);
+    if (d) {
+      setDateAvail(checkSpaceAvailability(space.id, d, closures));
+    } else {
+      setDateAvail(null);
+    }
+  }
+
   const facilities = [
     { icon: <FaWifi />, name: "High-Speed Wi-Fi" },
     { icon: <FaSnowflake />, name: "Air Conditioning" },
@@ -48,52 +84,82 @@ const SpaceDetails = () => {
     },
   ];
 
-  const glassCard =
-    "rounded-3xl border border-white/70 bg-white/30 shadow-xl shadow-slate-900/5 backdrop-blur-2xl";
+  const card = "border border-[#EDE8DF] bg-white shadow-sm";
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-linear-to-br from-[#dce9f8] via-[#f0f3f8] to-[#e0eafa]">
-      <div className="pointer-events-none absolute -top-32 -left-32 h-96 w-96 rounded-full bg-blue-400/20 blur-3xl" />
-      <div className="pointer-events-none absolute top-[35%] -right-32 h-96 w-96 rounded-full bg-indigo-300/20 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-0 left-1/4 h-96 w-96 rounded-full bg-white/60 blur-3xl" />
-
+    <div className="relative min-h-screen bg-[#F5F0E8]">
       <div
-        className="relative mx-auto px-5 py-8 md:px-10 "
+        className="relative mx-auto px-5 py-8 md:px-10"
         style={{ maxWidth: "1400px" }}
       >
         <Link
           to="/explore"
-          className="mb-7 inline-flex items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-blue-600"
+          className="mb-7 inline-flex items-center gap-2 text-sm font-semibold text-[#7C6F60] transition hover:text-[#1C1917]"
         >
           <FaArrowLeft />
           Back to Explore
         </Link>
 
-        <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
-          <div>
-            <p className="mb-2 text-sm font-semibold uppercase tracking-[3px] text-blue-600">
-              Explore StudySpace
-            </p>
-
-            <h1 className="text-3xl font-bold tracking-tight text-[#14213D] md:text-5xl">
-              Discover Your Perfect
-              <span className="block text-blue-600">Study Environment</span>
-            </h1>
-
-            <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-slate-600">
-              <FaMapMarkerAlt className="text-blue-600" />
-              <span>Location details</span>
-              <span className="mx-1">•</span>
-              <span>Study Space</span>
+        {/* Closure Banner */}
+        {activeClosure && (
+          <div
+            className={`mb-6 flex items-start gap-3 px-5 py-4 ${
+              activeClosure.type === "permanent"
+                ? "bg-[#1C1917] text-white"
+                : "border border-amber-200 bg-amber-50 text-amber-800"
+            }`}
+          >
+            {activeClosure.type === "permanent" ? (
+              <FaLock className="mt-0.5 shrink-0 text-[#C17A56]" size={14} />
+            ) : (
+              <FaExclamationTriangle className="mt-0.5 shrink-0 text-amber-500" size={14} />
+            )}
+            <div>
+              <p className="font-semibold">
+                {activeClosure.type === "permanent"
+                  ? "This space is permanently closed."
+                  : `This space is temporarily closed until ${new Date(activeClosure.endDate).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}.`}
+              </p>
+              <p className="mt-0.5 text-sm opacity-80">Reason: {activeClosure.reason}</p>
             </div>
           </div>
+        )}
 
-          <div className="w-fit rounded-full border border-green-200/80 bg-green-100/50 px-4 py-2 text-sm font-semibold text-green-700 shadow-sm backdrop-blur-xl">
-            Space Details
+        {/* Hero Header */}
+        <div className="mb-8 bg-[#1C1917] px-7 py-8 md:px-10 md:py-10">
+          <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div>
+              <div className="mb-3 flex items-center gap-3">
+                <span className="w-6 h-px bg-[#C17A56]" />
+                <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#C17A56]">
+                  Explore StudySpace
+                </p>
+              </div>
+
+              <h1
+                className="text-3xl font-bold tracking-tight text-white md:text-5xl"
+                style={{ fontFamily: "'Georgia', serif" }}
+              >
+                Discover Your Perfect
+                <span className="block text-[#C17A56]">Study Environment</span>
+              </h1>
+
+              <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-[#A09A93]">
+                <FaMapMarkerAlt className="text-[#C17A56]" />
+                <span>Location details</span>
+                <span className="mx-1">•</span>
+                <span>Study Space</span>
+              </div>
+            </div>
+
+            <div className="w-fit border border-[#D4C5A9]/30 bg-white/10 px-4 py-2 text-sm font-semibold text-white">
+              Space Details
+            </div>
           </div>
         </div>
 
-        <div className="grid gap-3 overflow-hidden rounded-3xl border border-white/60 shadow-2xl shadow-slate-900/10 md:h-120 md:grid-cols-3">
+        {/* Image Gallery */}
+        <div className="grid gap-3 overflow-hidden border border-[#D4C5A9] md:h-120 md:grid-cols-3">
           <div
             className="overflow-hidden md:col-span-2 md:h-full"
             style={{ height: "280px" }}
@@ -130,18 +196,24 @@ const SpaceDetails = () => {
           </div>
         </div>
 
+        {/* Content */}
         <div className="mt-10 grid gap-8 lg:grid-cols-3">
           <div className="space-y-8 lg:col-span-2">
-            <section className={`${glassCard} p-6 md:p-8`}>
-              <p className="mb-2 text-xs font-bold uppercase tracking-[2px] text-blue-600">
-                About the Space
-              </p>
 
-              <h2 className="text-2xl font-bold text-[#14213D]">
+            {/* About */}
+            <section className={`${card} p-6 md:p-8`}>
+              <div className="mb-3 flex items-center gap-3">
+                <span className="w-6 h-px bg-[#C17A56]" />
+                <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#C17A56]">
+                  About the Space
+                </p>
+              </div>
+
+              <h2 className="text-2xl font-bold text-[#1C1917]" style={{ fontFamily: "'Georgia', serif" }}>
                 A Better Place to Focus and Learn
               </h2>
 
-              <p className="mt-4 leading-8 text-slate-600">
+              <p className="mt-4 leading-8 text-[#7C6F60]">
                 Find a comfortable and peaceful environment designed for focused
                 learning. Whether you are preparing for examinations, completing
                 assignments, or working on projects, choose a study environment
@@ -149,14 +221,18 @@ const SpaceDetails = () => {
               </p>
             </section>
 
-            <section className={`${glassCard} p-6 md:p-8`}>
+            {/* Facilities */}
+            <section className={`${card} p-6 md:p-8`}>
               <div className="mb-6">
-                <p className="mb-2 text-xs font-bold uppercase tracking-[2px] text-blue-600">
-                  What's Included
-                </p>
+                <div className="mb-3 flex items-center gap-3">
+                  <span className="w-6 h-px bg-[#C17A56]" />
+                  <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#C17A56]">
+                    What's Included
+                  </p>
+                </div>
 
-                <h2 className="text-2xl font-bold text-[#14213D]">
-                  Facilities & Amenities
+                <h2 className="text-2xl font-bold text-[#1C1917]" style={{ fontFamily: "'Georgia', serif" }}>
+                  Facilities &amp; Amenities
                 </h2>
               </div>
 
@@ -164,13 +240,13 @@ const SpaceDetails = () => {
                 {facilities.map((facility, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-3 rounded-xl border border-white/70 bg-white/30 p-4 shadow-sm backdrop-blur-xl transition hover:bg-white/45"
+                    className="flex items-center gap-3 border border-[#D4C5A9] bg-[#F5F0E8] p-4 transition hover:bg-[#EDE8DF]"
                   >
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/70 bg-blue-100/50 text-lg text-blue-600">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center border border-[#D4C5A9] bg-white text-lg text-[#C17A56]">
                       {facility.icon}
                     </div>
 
-                    <span className="text-sm font-medium text-slate-700">
+                    <span className="text-sm font-medium text-[#1C1917]">
                       {facility.name}
                     </span>
                   </div>
@@ -178,12 +254,16 @@ const SpaceDetails = () => {
               </div>
             </section>
 
-            <section className={`${glassCard} p-6 md:p-8`}>
-              <p className="mb-2 text-xs font-bold uppercase tracking-[2px] text-blue-600">
-                Space Information
-              </p>
+            {/* Info */}
+            <section className={`${card} p-6 md:p-8`}>
+              <div className="mb-3 flex items-center gap-3">
+                <span className="w-6 h-px bg-[#C17A56]" />
+                <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#C17A56]">
+                  Space Information
+                </p>
+              </div>
 
-              <h2 className="mb-6 text-2xl font-bold text-[#14213D]">
+              <h2 className="mb-6 text-2xl font-bold text-[#1C1917]" style={{ fontFamily: "'Georgia', serif" }}>
                 Everything You Need to Know
               </h2>
 
@@ -212,15 +292,15 @@ const SpaceDetails = () => {
                   },
                 ].map((item) => (
                   <div key={item.title} className="flex items-start gap-4">
-                    <div className="rounded-xl border border-white/70 bg-blue-100/50 p-3 text-blue-600 backdrop-blur-xl">
+                    <div className="border border-[#EDE8DF] bg-[#F5F0E8] p-3 text-[#1C1917]">
                       {item.icon}
                     </div>
 
                     <div>
-                      <h3 className="font-semibold text-slate-800">
+                      <h3 className="font-semibold text-[#1C1917]">
                         {item.title}
                       </h3>
-                      <p className="mt-1 text-sm text-slate-600">
+                      <p className="mt-1 text-sm text-[#7C6F60]">
                         {item.description}
                       </p>
                     </div>
@@ -229,75 +309,88 @@ const SpaceDetails = () => {
               </div>
             </section>
 
-            <section className={`${glassCard} p-6 md:p-8`}>
+            {/* Seat Availability */}
+            <section className={`${card} p-6 md:p-8`}>
               <div className="flex items-center gap-3">
-                <div className="rounded-xl border border-white/70 bg-blue-100/50 p-3 text-blue-600 backdrop-blur-xl">
+                <div className="border border-[#EDE8DF] bg-[#F5F0E8] p-3 text-[#C17A56]">
                   <FaChair className="text-xl" />
                 </div>
 
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-[2px] text-blue-600">
-                    Seating Information
-                  </p>
+                  <div className="flex items-center gap-3">
+                    <span className="w-6 h-px bg-[#C17A56]" />
+                    <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#C17A56]">
+                      Seating Information
+                    </p>
+                  </div>
 
-                  <h2 className="text-2xl font-bold text-[#14213D]">
+                  <h2 className="text-2xl font-bold text-[#1C1917]" style={{ fontFamily: "'Georgia', serif" }}>
                     Seat Availability
                   </h2>
                 </div>
               </div>
 
-              <p className="mt-5 leading-7 text-slate-600">
+              <p className="mt-5 leading-7 text-[#7C6F60]">
                 Seat availability and occupancy information can be displayed
                 here once provided by the space owner.
               </p>
 
-              <div className="mt-5 flex items-start gap-3 rounded-2xl border border-blue-200/70 bg-blue-100/40 p-4 backdrop-blur-xl">
-                <FaCheckCircle className="mt-1 shrink-0 text-blue-600" />
+              <div className="mt-5 flex items-start gap-3 border border-[#EDE8DF] bg-[#F5F0E8] p-4">
+                <FaCheckCircle className="mt-1 shrink-0 text-[#C17A56]" />
 
-                <p className="text-sm leading-6 text-slate-700">
+                <p className="text-sm leading-6 text-[#1C1917]">
                   Contact the space owner to confirm available seats before
                   making a reservation.
                 </p>
               </div>
             </section>
 
-            <section className={`${glassCard} p-6 md:p-8`}>
-              <p className="mb-2 text-xs font-bold uppercase tracking-[2px] text-blue-600">
-                Community Feedback
-              </p>
+            {/* Reviews */}
+            <section className={`${card} p-6 md:p-8`}>
+              <div className="mb-3 flex items-center gap-3">
+                <span className="w-6 h-px bg-[#C17A56]" />
+                <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#C17A56]">
+                  Community Feedback
+                </p>
+              </div>
 
-              <h2 className="text-2xl font-bold text-[#14213D]">
-                Reviews & Ratings
+              <h2 className="text-2xl font-bold text-[#1C1917]" style={{ fontFamily: "'Georgia', serif" }}>
+                Reviews &amp; Ratings
               </h2>
 
-              <p className="mt-4 leading-7 text-slate-600">
+              <p className="mt-4 leading-7 text-[#7C6F60]">
                 Reviews and ratings from visitors can be displayed here.
               </p>
 
-              <div className="mt-5 rounded-2xl border border-dashed border-slate-300/80 bg-white/20 p-6 text-center backdrop-blur-xl">
+              <div className="mt-5 border border-dashed border-[#D4C5A9] bg-[#F5F0E8] p-6 text-center">
                 <FaStar className="mx-auto text-3xl text-amber-400" />
-                <p className="mt-3 font-semibold text-slate-700">
+                <p className="mt-3 font-semibold text-[#1C1917]">
                   No reviews to display
                 </p>
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm text-[#7C6F60]">
                   Reviews will appear here when available.
                 </p>
               </div>
             </section>
           </div>
 
+          {/* Sidebar */}
           <aside className="h-fit space-y-6 lg:sticky lg:top-8">
-            {/* Pricing Card */}
-            <div className="rounded-3xl border border-white/80 bg-white/35 p-6 shadow-2xl shadow-slate-900/10 backdrop-blur-2xl">
-              <p className="text-xs font-bold uppercase tracking-[2px] text-blue-600">
-                Reservation Options
-              </p>
 
-              <h2 className="mt-2 text-2xl font-bold text-[#14213D]">
+            {/* Pricing Card */}
+            <div className="border border-[#EDE8DF] bg-white p-6">
+              <div className="flex items-center gap-3">
+                <span className="w-6 h-px bg-[#C17A56]" />
+                <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#C17A56]">
+                  Reservation Options
+                </p>
+              </div>
+
+              <h2 className="mt-3 text-2xl font-bold text-[#1C1917]" style={{ fontFamily: "'Georgia', serif" }}>
                 Choose Your Plan
               </h2>
 
-              <p className="mt-2 text-sm leading-6 text-slate-600">
+              <p className="mt-2 text-sm leading-6 text-[#7C6F60]">
                 Select a reservation duration that suits your study schedule.
               </p>
 
@@ -305,35 +398,35 @@ const SpaceDetails = () => {
                 {pricingPlans.map((plan, index) => (
                   <div
                     key={index}
-                    className={`relative rounded-2xl border p-4 backdrop-blur-xl ${
+                    className={`relative border p-4 ${
                       plan.popular
-                        ? "border-blue-400/70 bg-blue-100/45 shadow-lg shadow-blue-900/5"
-                        : "border-white/70 bg-white/30"
+                        ? "border-l-4 border-l-[#C17A56] border-t-[#EDE8DF] border-r-[#EDE8DF] border-b-[#EDE8DF] bg-[#F5F0E8]"
+                        : "border-[#EDE8DF] bg-white"
                     }`}
                   >
                     {plan.popular && (
-                      <span className="absolute -top-3 right-4 rounded-full bg-blue-600 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-white shadow-lg">
+                      <span className="absolute -top-3 right-4 bg-[#1C1917] px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
                         Popular
                       </span>
                     )}
 
                     <div className="flex items-center justify-between gap-3">
                       <div>
-                        <h3 className="font-bold text-slate-800">
+                        <h3 className="font-bold text-[#1C1917]">
                           {plan.name}
                         </h3>
 
-                        <p className="mt-1 text-xs text-slate-600">
+                        <p className="mt-1 text-xs text-[#7C6F60]">
                           {plan.description}
                         </p>
                       </div>
 
                       <div className="text-right">
-                        <p className="text-xl font-bold text-[#14213D]">
+                        <p className="text-xl font-bold text-[#1C1917]">
                           {plan.price}
                         </p>
 
-                        <p className="text-xs text-slate-500">
+                        <p className="text-xs text-[#A09A93]">
                           {plan.duration}
                         </p>
                       </div>
@@ -342,40 +435,75 @@ const SpaceDetails = () => {
                 ))}
               </div>
 
-              <p className="mt-4 text-xs leading-5 text-slate-500">
+              <p className="mt-4 text-xs leading-5 text-[#A09A93]">
                 Pricing is illustrative UI content. Actual prices depend on the
                 space owner's listing.
               </p>
 
-              <button
-                type="button"
-                className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-4 font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700"
-              >
-                Continue to Booking
-                <FaArrowRight />
-              </button>
+              {/* Date availability check */}
+              <div className="mt-5">
+                <label className="mb-2 block text-[11px] font-bold uppercase tracking-[0.1em] text-[#7C6F60]">
+                  Check Date Availability
+                </label>
+                <input
+                  type="date"
+                  value={bookingDate}
+                  min={today}
+                  onChange={handleDateChange}
+                  className="w-full border border-[#D4C5A9] bg-white px-4 py-2.5 text-sm text-[#1C1917] outline-none focus:border-[#C17A56]"
+                />
+                {dateAvail && !dateAvail.available && (
+                  <div className="mt-2 flex items-start gap-2 border border-red-200 bg-red-50 p-3 text-xs text-red-700">
+                    <FaExclamationTriangle className="mt-0.5 shrink-0" size={11} />
+                    {dateAvail.reason}
+                  </div>
+                )}
+                {dateAvail && dateAvail.available && (
+                  <div className="mt-2 flex items-center gap-2 border border-green-200 bg-green-50 p-3 text-xs text-green-700">
+                    <FaCheckCircle className="shrink-0" size={11} />
+                    This date is available for booking.
+                  </div>
+                )}
+              </div>
 
-              <div className="mt-5 flex items-center justify-center gap-2 text-xs text-slate-600">
-                <FaShieldAlt className="text-green-600" />
+              {activeClosure ? (
+                <div className="mt-6 flex w-full items-center justify-center gap-2 border border-[#D4C5A9] bg-[#F5F0E8] px-5 py-4 font-semibold text-[#A09A93]">
+                  <FaLock size={13} />
+                  Not Available
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  disabled={dateAvail !== null && !dateAvail.available}
+                  className="mt-6 flex w-full items-center justify-center gap-2 bg-[#1C1917] px-5 py-4 font-semibold text-white transition hover:bg-[#C17A56] disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Continue to Booking
+                  <FaArrowRight />
+                </button>
+              )}
+
+              <div className="mt-5 flex items-center justify-center gap-2 text-xs text-[#7C6F60]">
+                <FaShieldAlt className="text-[#C17A56]" />
                 Booking and payment are not connected
               </div>
             </div>
 
-            <div className="rounded-3xl border border-white/20 bg-slate-900/85 p-6 text-white shadow-xl backdrop-blur-2xl">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-xl backdrop-blur-xl">
+            {/* Contact Card */}
+            <div className="bg-[#1C1917] p-6 text-white">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center border border-white/10 bg-white/10 text-xl">
                 <FaUsers />
               </div>
 
-              <h3 className="text-xl font-bold">Need More Information?</h3>
+              <h3 className="text-xl font-bold" style={{ fontFamily: "'Georgia', serif" }}>Need More Information?</h3>
 
-              <p className="mt-3 text-sm leading-7 text-slate-300">
+              <p className="mt-3 text-sm leading-7 text-[#A09A93]">
                 Get in touch with the space owner for information about
                 facilities, timings, seating and pricing.
               </p>
 
               <button
                 type="button"
-                className="mt-5 flex items-center gap-2 text-sm font-semibold text-blue-300"
+                className="mt-5 flex items-center gap-2 text-sm font-semibold text-[#C17A56]"
               >
                 Contact Information
                 <FaArrowRight />
@@ -384,14 +512,15 @@ const SpaceDetails = () => {
           </aside>
         </div>
 
-        <div className="mt-10 flex flex-col justify-between gap-4 rounded-2xl border border-white/60 bg-white/25 p-5 pt-6 shadow-lg backdrop-blur-xl sm:flex-row sm:items-center">
-          <p className="text-sm text-slate-600">
+        {/* Bottom strip */}
+        <div className="mt-10 flex flex-col justify-between gap-4 border border-[#EDE8DF] bg-white p-5 sm:flex-row sm:items-center">
+          <p className="text-sm text-[#7C6F60]">
             Find a space that makes every study session productive.
           </p>
 
           <Link
             to="/explore"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-[#1C1917] hover:text-[#C17A56]"
           >
             Explore More Spaces
             <FaArrowRight />

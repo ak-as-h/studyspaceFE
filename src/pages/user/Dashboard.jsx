@@ -17,19 +17,19 @@ const Dashboard = () => {
       title: "Total Bookings",
       value: "0",
       icon: <FaCalendarCheck />,
-      color: "bg-blue-50 text-blue-600",
+      color: "bg-[#F5F0E8] border border-[#EDE8DF] text-[#C17A56]",
     },
     {
       title: "Upcoming Bookings",
       value: "0",
       icon: <FaClock />,
-      color: "bg-amber-50 text-amber-600",
+      color: "bg-[#F5F0E8] border border-[#EDE8DF] text-[#C17A56]",
     },
     {
       title: "Completed Bookings",
       value: "0",
       icon: <FaBookOpen />,
-      color: "bg-green-50 text-green-600",
+      color: "bg-[#F5F0E8] border border-[#EDE8DF] text-[#C17A56]",
     },
   ];
 
@@ -54,43 +54,46 @@ const Dashboard = () => {
   return (
     <div className="mx-auto max-w-7xl px-5 py-10 md:px-8">
 
-      
+      {/* Welcome Header */}
       <section className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-center">
         <div>
-          <span className="text-sm font-semibold uppercase tracking-wider text-blue-600">
-            Student Dashboard
-          </span>
+          <div className="mb-3 flex items-center gap-3">
+            <span className="w-6 h-px bg-[#C17A56]" />
+            <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#C17A56]">
+              Student Dashboard
+            </span>
+          </div>
 
-          <h1 className="mt-3 text-3xl font-bold text-slate-900 md:text-4xl">
+          <h1
+            className="mt-3 text-3xl font-bold tracking-tight text-[#1C1917] md:text-4xl"
+            style={{ fontFamily: "'Georgia', serif" }}
+          >
             Welcome Back!
           </h1>
 
-          <p className="mt-3 text-sm leading-6 text-gray-500 md:text-base">
+          <p className="mt-3 text-sm leading-6 text-[#7C6F60] md:text-base">
             Manage your bookings and discover new places to study.
           </p>
         </div>
       </section>
 
-      
+      {/* Stats */}
       <section className="mb-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {stats.map((stat) => (
           <div
             key={stat.title}
-            className="rounded-2xl border border-white/70 bg-white/35 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-2xl"
+            className="border border-[#EDE8DF] bg-white p-6"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-500">
-                  {stat.title}
-                </p>
-
-                <h2 className="mt-3 text-3xl font-bold text-slate-900">
+                <p className="text-sm text-[#7C6F60]">{stat.title}</p>
+                <h2 className="mt-3 text-3xl font-bold text-[#1C1917]">
                   {stat.value}
                 </h2>
               </div>
 
               <div
-                className={`flex h-14 w-14 items-center justify-center rounded-2xl text-xl ${stat.color}`}
+                className={`flex h-12 w-12 items-center justify-center text-xl ${stat.color}`}
               >
                 {stat.icon}
               </div>
@@ -99,14 +102,23 @@ const Dashboard = () => {
         ))}
       </section>
 
-      
+      {/* Quick Actions */}
       <section className="mb-10">
         <div className="mb-5">
-          <h2 className="text-2xl font-bold text-slate-900">
+          <div className="mb-3 flex items-center gap-3">
+            <span className="w-6 h-px bg-[#C17A56]" />
+            <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#C17A56]">
+              Navigation
+            </span>
+          </div>
+          <h2
+            className="text-2xl font-bold tracking-tight text-[#1C1917]"
+            style={{ fontFamily: "'Georgia', serif" }}
+          >
             Quick Actions
           </h2>
 
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm text-[#7C6F60]">
             Everything you need in one place.
           </p>
         </div>
@@ -115,21 +127,19 @@ const Dashboard = () => {
           {quickActions.map((action) => (
             <div
               key={action.title}
-              className="group rounded-2xl border border-white/70 bg-white/35 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-2xl transition duration-300 hover:-translate-y-1 hover:bg-white/45 hover:shadow-xl"
+              className="group border border-[#EDE8DF] bg-white p-6 transition duration-300 hover:border-[#C17A56]"
             >
-              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100/60 text-lg text-blue-600">
+              <div className="mb-5 flex h-12 w-12 items-center justify-center bg-[#F5F0E8] border border-[#EDE8DF] text-lg text-[#C17A56]">
                 {action.icon}
               </div>
 
-              <h3 className="font-bold text-slate-900 transition group-hover:text-blue-600">
-                {action.title}
-              </h3>
+              <h3 className="font-bold text-[#1C1917]">{action.title}</h3>
 
-              <p className="mt-2 text-sm leading-6 text-gray-500">
+              <p className="mt-2 text-sm leading-6 text-[#7C6F60]">
                 {action.description}
               </p>
 
-              <div className="mt-5 flex items-center gap-2 text-sm font-semibold text-blue-600">
+              <div className="mt-5 flex items-center gap-2 text-sm font-semibold text-[#A09A93] transition group-hover:text-[#C17A56]">
                 Explore
                 <FaArrowRight className="transition group-hover:translate-x-1" />
               </div>
@@ -138,46 +148,53 @@ const Dashboard = () => {
         </div>
       </section>
 
-      
-      <section className="mb-10 rounded-2xl border border-white/70 bg-white/35 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-2xl md:p-8">
+      {/* Recent Bookings */}
+      <section className="mb-10 border border-[#EDE8DF] bg-white p-6 md:p-8">
 
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900">
+            <div className="mb-3 flex items-center gap-3">
+              <span className="w-6 h-px bg-[#C17A56]" />
+              <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#C17A56]">
+                History
+              </span>
+            </div>
+            <h2
+              className="text-2xl font-bold tracking-tight text-[#1C1917]"
+              style={{ fontFamily: "'Georgia', serif" }}
+            >
               Recent Bookings
             </h2>
 
-            <p className="mt-2 text-sm text-gray-500">
+            <p className="mt-2 text-sm text-[#7C6F60]">
               Keep track of your study reservations.
             </p>
           </div>
 
           <button
             type="button"
-            className="flex items-center gap-2 text-sm font-semibold text-blue-600 transition hover:text-blue-800"
+            className="flex items-center gap-2 text-sm font-semibold text-[#C17A56] transition hover:text-[#1C1917]"
           >
             View All
             <FaArrowRight />
           </button>
         </div>
 
-        <div className="flex min-h-56 flex-col items-center justify-center text-center">
-          <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-100/60">
-            <FaCalendarCheck className="text-2xl text-blue-600" />
+        <div className="flex min-h-56 flex-col items-center justify-center border border-dashed border-[#D4C5A9] bg-[#F5F0E8] p-8 text-center">
+          <div className="mb-4 flex h-16 w-16 items-center justify-center bg-white border border-[#EDE8DF]">
+            <FaCalendarCheck className="text-2xl text-[#C17A56]" />
           </div>
 
-          <h3 className="font-bold text-slate-900">
-            No Bookings Yet
-          </h3>
+          <h3 className="font-bold text-[#1C1917]">No Bookings Yet</h3>
 
-          <p className="mt-2 max-w-sm text-sm leading-6 text-gray-500">
+          <p className="mt-2 max-w-sm text-sm leading-6 text-[#7C6F60]">
             Your study-space reservations will appear here once you make
             your first booking.
           </p>
 
           <button
             type="button"
-            className="mt-5 text-sm font-semibold text-blue-600 transition hover:text-blue-800"
+            className="mt-5 text-sm font-semibold text-[#C17A56] transition hover:text-[#1C1917]"
           >
             Find a Study Space
           </button>
@@ -185,38 +202,45 @@ const Dashboard = () => {
 
       </section>
 
-      
-      <section className="rounded-2xl border border-white/70 bg-white/35 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-2xl md:p-8">
+      {/* Discover */}
+      <section className="bg-[#1C1917] p-6 md:p-8">
 
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900">
+            <div className="mb-3 flex items-center gap-3">
+              <span className="w-6 h-px bg-[#C17A56]" />
+              <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#C17A56]">
+                Discover
+              </span>
+            </div>
+            <h2
+              className="text-2xl font-bold tracking-tight text-white"
+              style={{ fontFamily: "'Georgia', serif" }}
+            >
               Discover Study Spaces
             </h2>
 
-            <p className="mt-2 text-sm text-gray-500">
+            <p className="mt-2 text-sm text-[#A09A93]">
               Find a comfortable place for your next study session.
             </p>
           </div>
 
-          <FaBookmark className="text-xl text-blue-600" />
+          <FaBookmark className="text-xl text-[#C17A56]" />
         </div>
 
         <div className="flex min-h-48 flex-col items-center justify-center text-center">
-          <FaMapMarkerAlt className="mb-4 text-3xl text-blue-600" />
+          <FaMapMarkerAlt className="mb-4 text-3xl text-[#C17A56]" />
 
-          <h3 className="font-bold text-slate-900">
-            Explore New Places
-          </h3>
+          <h3 className="font-bold text-white">Explore New Places</h3>
 
-          <p className="mt-2 max-w-sm text-sm leading-6 text-gray-500">
+          <p className="mt-2 max-w-sm text-sm leading-6 text-[#A09A93]">
             Browse libraries, reading rooms and coworking spaces
             to find the environment that suits you.
           </p>
 
           <button
             type="button"
-            className="mt-5 inline-flex items-center gap-2 rounded-xl border border-blue-400/30 bg-blue-600/90 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700"
+            className="mt-5 inline-flex items-center gap-2 bg-[#C17A56] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#A8663F]"
           >
             Explore Now
             <FaArrowRight />

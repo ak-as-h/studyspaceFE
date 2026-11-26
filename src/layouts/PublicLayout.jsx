@@ -1,15 +1,14 @@
 import React from "react";
-
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const PublicLayout = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#F5F0E8]">
       <Navbar />
 
-      <main className="flex-row">
+      <main className="flex-1">
         <Outlet />
       </main>
 
